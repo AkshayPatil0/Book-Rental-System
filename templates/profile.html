@@ -1,0 +1,210 @@
+{% extends 'base.html' %} {% load static %} {% load tags %} {% block content %}
+
+<div class="custom-border-bottom py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0">
+        <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+        <strong class="text-black">Profile</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="h3 mb-3 text-black">User Info</h2>
+      </div>
+
+      <div class="col-md-7">
+        <div class="p-3 p-lg-5 border">
+          <div class="form-group row">
+            <div class="col-md-12" style="text-align: center">
+              <img
+                src="{% static 'images/user_icon.png' %}"
+                height="150"
+                style="padding-bottom: 15px"
+              />
+            </div>
+
+            <div class="col-md-12" style="text-align: center">
+              <h5 class="text-black" style="text-transform: capitalize">
+                {{ user.first_name }} {{ user.last_name }}
+              </h5>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-md-6" style="text-align: center">
+              <h6 class="text-black">Email :</h6>
+              <h6 class="text-grey">{{ user.email }}</h6>
+            </div>
+
+            <div class="col-md-6" style="text-align: center">
+              <h6 class="text-black">Phone no :</h6>
+              <h6 class="text-grey">{{ user.phone }}</h6>
+            </div>
+          </div>
+
+          <div class="p-3 mb-3" style="text-align: center">
+            <div class="form-group row ">
+              <div class="col-md-6">
+                <h6 class="text-black">Deposited amount :</h6>
+                <h6 class="text-grey">{{ user.deposite }}</h6>
+              </div>
+
+              <div class="col-lg-5" style="padding-left:15%">
+                <input
+                  type="submit"
+                  class="btn btn-primary btn-lg btn-block"
+                  data-toggle="collapse"
+                  data-target="#update_deposite"
+                  onclick="#update_deposite"
+                  value="Add balance"
+                />
+              </div>
+            </div>
+            <div class="form-group row collapse" id="update_deposite">
+              <div class="form-group row" style="padding-left: 33%">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="deposite_amt"
+                  name="deposite_amt"
+                  placeholder="Enter amount to add"
+                />
+              </div>
+
+              <div
+                class="container py-2"
+                style="text-align: left; padding-left: 33%"
+              >
+                <script>
+                  function update() {
+                    var amt = $("#deposite_amt").val();
+
+                    if (amt > 0) {
+                      var url = "/payment/" + amt;
+                      let pay = window.open(
+                        url,
+                        "",
+                        "width=500,height=500,left=500,top=50"
+                      );
+                    } else {
+                      alert("Enter valid amount");
+                    }
+                  }
+                </script>
+
+                <div class="form-group row" style="align-content: center">
+                  <div class="col-lg-5">
+                    <button
+                      type="button"
+                      onclick="update()"
+                      class="btn btn-primary btn-lg btn-block"
+                    >
+                      pay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 ml-auto">
+        {% assign 1 as c %} {% for address in addresses %}
+        <div class="p-4 border mb-3" style="line-height: 2.5vh">
+          <span class="d-block text-primary h6 text-uppercase"
+            >Address {{ c }}</span
+          >
+          <div class="container">
+            <p class="mb-3" style="text-transform: capitalize">
+              {{ address.first_name }} {{ address.last_name }},<br />
+              {{ address.add_ln1 }}<br />
+              {{ address.add_ln2 }}<br />
+              {{ address.city }}<br />
+              {{ address.pincode }}<br />
+              Ph no. {{ address.phone }}
+            </p>
+          </div>
+        </div>
+        {% assign c|incr as c %} {% endfor %}
+      </div>
+    </div>
+    <br /><br />
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="h3 mb-3 text-black">Your Orders</h2>
+      </div>
+
+      <div class="col-md-7">
+        <div class="p-3 p-lg-5 border">
+          {% for id, items in orders.items %}
+          <div class="form-group row">
+            <div class="col-md-12">
+              <h2 class="h5 mb-3 text-black">Order ID : {{ id }}</h2>
+              <div class="p-3 p-lg-5 border" style='padding-bottom:0px;'>
+                <table class="table site-block-order-table mb-5">
+                  <thead>
+                    <th>Product</th>
+                    <th>Total</th>
+                  </thead>
+                  <tbody>
+                    {% for item in items %}
+                    <tr>
+                      <td>
+                        {{ item.book.title }}<strong class="mx-2">x</strong>
+                        {{ item.quantity }}
+                      </td>
+                      <td>{{ item.total }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                      <td style="color: red;">
+                        {% with id|rent as rent %}
+                        {% if rent.is_received and not rent.return_requested %}
+                        <button
+                          class="btn btn-primary btn-sm btn-block"
+                          id="is_delivered"
+                          style="max-width: 150px; max-height:30px; text-transform:capitalize"
+                          onclick="window.location = '/update_status/req/{{rent.id}}'"
+                        >
+                          return
+                        </button>
+                        {% elif rent.is_returned %}
+                        Returned
+                        {% elif rent.return_requested%}
+                        Return requested
+                        {% else %}
+                        Your order is on the way
+                        {% endif %}
+                        
+                      </td>
+                      <td>
+                        {% if rent.return_requested %}
+                        <strong>Rent:</strong> Rs. {{rent.cost}}*
+                        {% else %}-
+                        {% endif %}
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+                {% if rent.return_requested %}
+                <p>*including delivery charges Rs. 50 </p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endwith %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+</div>

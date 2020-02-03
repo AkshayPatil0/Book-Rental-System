@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% block content %}
+    
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="/">Home</a> 
+            <span class="mx-2 mb-0">/</span> 
+            <a href="/cart/0">Cart</a> <span class="mx-2 mb-0">/</span> 
+            <strong class="text-black">Checkout</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        
+        <div class="row">
+          
+          <div class="col-md-6 mb-5 mb-md-0">
+            <h2 class="h3 mb-3 text-black">Billing Details</h2>
+            <div class="p-3 p-lg-5 border">
+              {% for message in messages %}
+              {% if not message.extra_tags == 'deposite' %}
+              <p style="color: red;" >{{message}}</p>
+              {% endif %}
+              {% endfor %}
+
+              <div class="form-group" style="margin-bottom: 0px">
+                <script>
+                  function collapse(){
+                    if ($('#c_default_address').is(':checked')) {
+                      $('#default_address').slideDown(); 
+                       }
+                    else {
+                      $('#default_address').slideUp(); 
+                      }
+                    
+                    if ($('#c_different_address').is(':checked')) {
+                      $('#different_address').slideDown(); 
+                      }
+                    else {
+                      $('#different_address').slideUp(); 
+                      }
+                  }
+                </script>
+                <form action="place/{{order_id}}">
+                <label id="a1" for="c_default_address" class="text-black" onclick="collapse()"
+                        role="button">
+                        <input type="radio" value="1" name="address" id="c_default_address"> Use Default Address
+                </label>
+                
+                
+                <div class="collapse" id="default_address"  >
+                  <div class="py-2">
+
+                      <div class="form-group row">
+                        <div class="col-md-6">
+                        {% with 1 as c %}
+                          {% for address in addresses %}
+                            <label for="c_default_address{{c}}" class="text-black">
+                              <input type="radio" value="{{address.id}}" name="c_address" 
+                                      id="c_default_address{{c}}">Address {{c}}
+                            </label>
+                            {% assign c|incr as c %}
+                            <div class="container">
+                                <p class="mb-3">{{ address.first_name }} {{ address.last_name }}
+                                <br>{{address.add_ln1}}
+                                <br>{{address.add_ln2}}
+                                <br>{{address.city}}
+                                <br>{{address.pin}}
+                                </p>
+                              </div>
+                            {% empty %}
+                              <p>No default addresses</p>
+                          {% endfor %}
+                        {% endwith %}
+                        </div>
+                      </div>
+   
+                    </div>
+                  </div>
+
+                </div>
+
+              <div class="form-group" style="margin-bottom: 0px">
+                
+                <label for="c_different_address" class="text-black" 
+                        onclick="collapse()"
+                        role="button">
+                        <input type="radio" value="2" name="address" id="c_different_address"> Use Different Address
+                </label>
+                
+                <div class="collapse" id="different_address">
+                  <div class="py-2">
+
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="c_fname" name="c_fname">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="c_lname" name="c_lname">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="c_add_ln1" class="text-black">Address </label>
+                        <input type="text" class="form-control" id="c_add_ln1" 
+                                name="c_add_ln1" placeholder="Address Line 1 *">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="c_add_ln2" 
+                                name="c_add_ln2"placeholder="Address Line 2">
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="c_city" 
+                                name="c_city" placeholder="City *">
+                    </div>
+
+
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="c_pin" class="text-black">Pincode <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="c_pin" name="c_pin">
+                      </div>
+                    </div>
+
+                    <div class="form-group row mb-5">
+                      <div class="col-md-12">
+                        <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="c_phone" name="c_phone">
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Your Order</h2>
+                <div class="p-3 p-lg-5 border">
+                  <table class="table site-block-order-table mb-5">
+                    <thead>
+                      <th>Product</th>
+                      <th>Total</th>
+                    </thead>
+                    <tbody>
+                      {% for item in items %}
+                      <tr>
+                        <td>{{item.book.title}}<strong class="mx-2">x</strong> {{item.quantity}}</td>
+                        <td>{{item.total}}</td> 
+                      </tr>
+                      {% endfor %}
+
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                        <td class="text-black font-weight-bold"><strong>{{total}}</strong></td>
+                        
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+              
+                  {% for message in messages %}
+                    {% if message.extra_tags == 'deposite' %}
+                      <div class="border p-3 mb-3">
+                        <div class="py-2">
+                          <p style="color: red;" >{{message}}</p> 
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}

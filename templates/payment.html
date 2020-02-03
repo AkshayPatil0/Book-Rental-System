@@ -1,0 +1,69 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Get Books &mdash; online book rental platform</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"
+    />
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/owl.theme.default.min.css' %}"
+    />
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <span class="icon-check_circle display-3 text-success"></span>
+            <h3 class="display-5 text-black">Payment gateway</h3>
+            <p class="lead mb-5">Make payment to procced.</p>
+            <p>
+              <button
+                onclick="confirm_pay()"
+                class="btn btn-sm height-auto px-4 py-3 btn-primary"
+              >
+                make payment
+              </button>
+              <button
+                onclick="close_win()"
+                class="btn btn-sm height-auto px-4 py-3 btn-primary"
+              >
+                cancel
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  function close_win() {
+    window.close();
+  }
+
+  function confirm_pay() {
+    var amt = window.opener.$("#deposite_amt").val();
+    var url = "/update_deposite/" + amt;
+    window.opener.location = url;
+    window.close();
+  }
+</script>

@@ -1,0 +1,113 @@
+{% extends 'base.html' %} 
+{% load static%} 
+{% load tags %} 
+{% block content %}
+<div
+  class="site-blocks-cover"
+  data-aos="fade"
+  style="background-image:url('{% static 'images/books.jpg' %}'); 
+          background-position: center; background-repeat: no-repeat;
+          background-size: cover; ">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml-auto order-md-2 align-self-start">
+        <div class="site-block-cover-content">
+          <h2 class="sub-title" style="color: ivory">
+            #New Collection 2019
+          </h2>
+          <h1 style="background-color:hsla(0, 0%, 84%, 0.7)">Arrivals Sales</h1>
+          <p><a href="/books/1" class="btn btn-black rounded-0">Shop Now</a></p>
+        </div>
+      </div>
+      <!-- <div class="col-md-6 order-1 align-self-end">
+        <img
+          src="{% static 'images/books.jpg' %}"
+          alt="Image"
+          class="img-fluid"
+        />
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="site-section">
+  <div class="container">
+  {% with 3 as count %}
+    {% for genre in categories %}
+      
+      <div class="row">
+        <div class="title-section mb-5 col-12">
+          <h2 style="text-transform: uppercase">Popular in {{ genre }}</h2>
+        </div>
+      </div>
+      
+      <div class="row">
+        {% for book in books %} 
+          {% if book.category == genre and count != 0 %}
+          {% assign count|dcr as count %}
+          <div class="col-lg-4 col-md-6 item-entry mb-4">
+            <a href="books/book_info/{{ book.id }}/" class="product-item md-height bg-gray d-block">
+              <img src="{{ book.img.url }}" alt="Image" class="img-fluid" />
+            </a>
+            <h2 class="item-title">
+              <a href="books/book_info/{{ book.id }}/"style="text-transform: capitalize">
+                {{ book.title }}
+              </a>
+            </h2>
+            <strong class="item-price">Rs. {{book.price}}</strong>
+          </div>
+          {% endif %}
+        {% endfor %}
+        
+      </div>
+      <div class="row">
+        <a href="/books/filter/category/{{genre}}/1" class="d-flex">
+          <h3>see more...</h3>
+        </a>
+      </div>
+      <br><br><br><br>
+    {% endfor %}
+    {% endwith %}
+  </div>
+</div>
+
+<div class="site-section">
+  <div class="container">
+    <div class="row">
+      <div class="title-section text-center mb-5 col-12">
+        <h2 class="text-uppercase">Explore Authors</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 block-3">
+        <div class="nonloop-block-3 owl-carousel">
+          {% for author in authors %}
+          <div class="item">
+            <div class="item-entry">
+              <div class="item-entry mb-4">
+                <div class="product-item sm-height bg-gray mb-4">
+                  <a
+                    href="/books/filter/author/{{ author }}/1"
+                    class="product-category"
+                    style="font-size: 100%; top: 80%"
+                  >
+                    {{ author }}</a
+                  >
+                  <img
+                    src="/media/{{ author }}.jpg"
+                    alt="Image"
+                    class="img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

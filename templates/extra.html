@@ -1,0 +1,174 @@
+<!-- <a href="#" class="product-item md-height bg-gray d-block">
+                    <img src="{% static 'images/model_1.png' %}" alt="Image" class="img-fluid">
+                  </a>
+                  <h2 class="item-title"><a href="#">Smooth Cloth</a></h2>
+                  <strong class="item-price"><del>$46.00</del> $28.00</strong>
+                  <div class="star-rating">
+                    <span class="icon-star2 text-warning"></span>
+                    <span class="icon-star2 text-warning"></span>
+                    <span class="icon-star2 text-warning"></span>
+                    <span class="icon-star2 text-warning"></span>
+                    <span class="icon-star2 text-warning"></span>
+                  </div> -->
+
+<div class="site-section">
+  <div class="container">
+    <div class="title-section mb-5">
+      <h2 class="text-uppercase">
+        <span class="d-block">Discover</span> The Authors
+      </h2>
+    </div>
+    <!-- <div class="row align-items-stretch"> -->
+
+    {% for author in authors %}
+    <div class="col-lg-4 col-md-6 item-entry mb-4">
+      <div class="product-item sm-height bg-gray mb-4">
+        <a href="#" class="product-category">{{ author }}</a>
+        <img
+          src="{% static 'images/model_5.png' %}"
+          alt="Image"
+          class="img-fluid"
+        />
+        -->
+      </div>
+    </div>
+    {% endfor %}
+    <!-- </div> -->
+  </div>
+</div>
+
+<div class="mb-1 d-flex">
+  <label for="option-sm" class="d-flex mr-3 mb-3">
+    <span class="d-inline-block mr-2" style="top:-2px; position: relative;"
+      ><input type="radio" id="option-sm" name="shop-sizes"
+    /></span>
+    <span class="d-inline-block text-black">Small</span>
+  </label>
+  <label for="option-md" class="d-flex mr-3 mb-3">
+    <span class="d-inline-block mr-2" style="top:-2px; position: relative;"
+      ><input type="radio" id="option-md" name="shop-sizes"
+    /></span>
+    <span class="d-inline-block text-black">Medium</span>
+  </label>
+  <label for="option-lg" class="d-flex mr-3 mb-3">
+    <span class="d-inline-block mr-2" style="top:-2px; position: relative;"
+      ><input type="radio" id="option-lg" name="shop-sizes"
+    /></span>
+    <span class="d-inline-block text-black">Large</span>
+  </label>
+  <label for="option-xl" class="d-flex mr-3 mb-3">
+    <span class="d-inline-block mr-2" style="top:-2px; position: relative;"
+      ><input type="radio" id="option-xl" name="shop-sizes"
+    /></span>
+    <span class="d-inline-block text-black"> Extra Large</span>
+  </label>
+</div>
+
+<div class="star-rating">
+  <span class="icon-star2 text-warning"></span>
+  <span class="icon-star2 text-warning"></span>
+  <span class="icon-star2 text-warning"></span>
+  <span class="icon-star2 text-warning"></span>
+  <span class="icon-star2 text-warning"></span>
+</div>
+
+<a
+  href="#"
+  class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"
+>
+  <span class="icon-menu"></span>
+</a>
+
+<div class="site-section">
+  <div class="container">
+    <div class="title-section mb-5">
+      <h2 class="text-uppercase">
+        <span class="d-block">Discover</span> The Collections
+      </h2>
+    </div>
+    <div class="row align-items-stretch">
+      <div class="col-lg-8">
+        <div class="product-item sm-height full-height bg-gray">
+          <a href="#" class="product-category">Women <span>25 items</span></a>
+          <img src="images/model_4.png" alt="Image" class="img-fluid" />
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="product-item sm-height bg-gray mb-4">
+          <a href="#" class="product-category">Men <span>25 items</span></a>
+          <img src="images/model_5.png" alt="Image" class="img-fluid" />
+        </div>
+
+        <div class="product-item sm-height bg-gray">
+          <a href="#" class="product-category">Shoes <span>25 items</span></a>
+          <img src="images/model_6.png" alt="Image" class="img-fluid" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="c_diff_country" class="text-black"
+    >Country <span class="text-danger">*</span></label
+  >
+  <select id="c_diff_country" class="form-control">
+    <option value="1">Select a country</option>
+    <option value="2">bangladesh</option>
+    <option value="3">Algeria</option>
+    <option value="4">Afghanistan</option>
+    <option value="5">Ghana</option>
+    <option value="6">Albania</option>
+    <option value="7">Bahrain</option>
+    <option value="8">Colombia</option>
+    <option value="9">Dominican Republic</option>
+  </select>
+</div>
+
+<div class="row mb-5">
+  <div class="col-md-12">
+    <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+    <div class="p-3 p-lg-5 border">
+      <label for="c_code" class="text-black mb-3"
+        >Enter your coupon code if you have one</label
+      >
+      <div class="input-group w-75">
+        <input
+          type="text"
+          class="form-control"
+          id="c_code"
+          placeholder="Coupon Code"
+          aria-label="Coupon Code"
+          aria-describedby="button-addon2"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-primary btn-sm px-4"
+            type="button"
+            id="button-addon2"
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <label class="text-black h4" for="coupon">Coupon</label>
+    <p>Enter your coupon code if you have one.</p>
+  </div>
+  <div class="col-md-8 mb-3 mb-md-0">
+    <input
+      type="text"
+      class="form-control py-3"
+      id="coupon"
+      placeholder="Coupon Code"
+    />
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-primary btn-sm px-4">Apply Coupon</button>
+  </div>
+</div>

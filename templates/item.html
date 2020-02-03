@@ -1,0 +1,148 @@
+{% extends 'base.html' %} {% load static %} {% block content%}
+
+<div class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0">
+        <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+        <a href="/books/1">Books</a> <span class="mx-2 mb-0">/</span>
+        <strong class="text-black">{{ item.title }}</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="item-entry">
+          <a href="#" class="product-item md-height bg-gray d-block">
+            <img src="{{ item.img.url }}" alt="Image" class="img-fluid" />
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h2 class="text-black">{{ item.title }}</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur,
+          vitae, explicabo? Incidunt facere, natus soluta dolores iusto!
+          Molestiae expedita veritatis nesciunt doloremque sint asperiores fuga
+          voluptas, distinctio, aperiam, ratione dolore.
+        </p>
+        <p class="mb-4">
+          Ex numquam veritatis debitis minima quo error quam eos dolorum quidem
+          perferendis. Quos repellat dignissimos minus, eveniet nam voluptatibus
+          molestias omnis reiciendis perspiciatis illum hic magni iste, velit
+          aperiam quis.
+        </p>
+
+        <p>
+          <strong class="text-primary h4">Rs. {{ item.price }}</strong>
+        </p>
+
+        {% if act == 'go' %}
+        <p>
+          <a
+            href="/cart/0"
+            class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary"
+            >Go to cart</a
+          >
+        </p>
+        {% else %}
+        <p>
+          <a
+            href="/cart/{{ item.id }}"
+            class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary"
+            >add to cart</a
+          >
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-section block-3 site-blocks-2">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-7 site-section-heading text-center pt-4">
+        <h2>More in {{ item.category }}</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 block-3">
+        <div class="nonloop-block-3 owl-carousel">
+          {% for book in books%} 
+          {% if book.category == item.category and book.id != item.id %}
+          <div class="item">
+            <div class="item-entry">
+              <a
+                href="/books/book_info/{{ book.id }}/"
+                class="product-item md-height bg-gray d-block"
+              >
+                <img
+                  src="/media/{{ book.img }}"
+                  alt="Image"
+                  class="img-fluid"
+                  style="height: 70%; width: 50%"
+                />
+              </a>
+              <h2 class="item-title">
+                <a href="/books/book_info/{{ book.id }}/">{{ book.title }}</a>
+              </h2>
+              <strong class="item-price">Rs. {{ book.price }}</strong>
+            </div>
+          </div>
+          {% endif %} 
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+{% if item.category != 'autobiography' %}
+<div class="site-section block-3 site-blocks-2">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-7 site-section-heading text-center pt-4">
+        <h2>More From {{ item.author }}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 block-3">
+        <div class="nonloop-block-3 owl-carousel">
+          {% for book in books%} 
+          {% if book.author == item.author and book.id != item.id %}
+          <div class="item">
+            <div class="item-entry">
+              <a
+                href="/books/book_info/{{ book.id }}/"
+                class="product-item md-height bg-gray d-block"
+              >
+                <img
+                  src="/media/{{ book.img }}"
+                  alt="Image"
+                  class="img-fluid"
+                  style="height: 70%; width: 50%"
+                />
+              </a>
+              <h2 class="item-title">
+                <a href="/books/book_info/{{ book.id }}/">{{ book.title }}</a>
+              </h2>
+              <strong class="item-price">Rs. {{ book.price }}</strong>
+            </div>
+          </div>
+          {% endif %} 
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endif %}
+{% endblock %}

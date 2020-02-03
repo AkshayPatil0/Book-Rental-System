@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tags %}
+{% block content %}
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+						<a href="index.html">Home</a>
+						<span class="mx-2 mb-0">/</span> 
+						<strong class="text-black">Search result</strong>
+					</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-9 order-1">
+						
+						<div class="row align"> 
+							
+							<div class="col-md-12 mb-5">	
+								<div class="float-md-left"><h2 class="text-black h5">Search result</h2></div>
+									<div class="d-flex">
+										<div class="dropdown mr-1 ml-md-auto">  
+										</div>
+									</div>
+								</div>		
+							</div> 
+								
+							<div class="row mb-5">
+								{% if books|length == 0 %}
+								<div class="container">
+								<h2 class="item-title">No result found !!</h2>
+								</div>
+								{% else %}
+								{% for book in books %}
+								<div class="col-lg-6 col-md-6 item-entry mb-4">
+									<a href="/item/{{book.id}}" class="product-item md-height bg-gray d-block">
+									<img src="{{book.img.url}}" alt="Image" class="img-fluid">
+									</a>
+									<h2 class="item-title"><a href="/item/{{book.id}}">{{book.title}}</a></h2>
+									<strong class="item-price">Rs. {{book.price}}</strong>
+								</div>
+								{% endfor %}
+								{% endif %}
+							</div>
+            
+						</div>
+
+					</div>
+				</div>    
+			</div>
+    </div>
+
+{% endblock %}

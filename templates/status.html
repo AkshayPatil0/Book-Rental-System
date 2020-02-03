@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="site-section">
+  <div class="container">
+    
+    <div class="block-7">
+      <div class="col-md-4" style="margin-left: 70%;">
+      <form action="search_order">
+        <div class="form-group">
+          <input type="text" class="form-control py-4" name="order_id" id="order_id" placeholder="Enter order id">
+          <input type="submit" class="btn btn-sm btn-primary" value="Search">
+        </div>
+      </form>
+    </div>
+    </div>
+    <br>
+    <div class="row mb-5">
+      {% for message in messages %}
+      <p style="color: red;">{{ message }}</p>
+      {% endfor %}
+      <table class="table table-bordered" style="min-width: 20%;">
+        <thead>
+          <tr>
+            <th class="product">Order id</th>
+            <th class="product">Customer</th>
+            <th class="product">Calculated_cost</th>
+            <th class="product">Is_delivered</th>
+            <th class="product">Delivered date</th>
+            <th class="product">Is_returned</th>
+            <th class="product">Returned date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rent in rents %}
+          <tr>
+            <td>
+              <h2 class="h6 text-black">{{ rent.order.id }}</h2>
+            </td>
+            <td>
+              <h2 class="h6 text-black">{{ rent.order.customer.first_name }}</h2>
+            </td>
+            <td class="product-name">
+              <h2 class="h6 text-black">{{ rent.cost }}</h2>
+            </td>
+            <td>
+              {% if not rent.is_received %}
+              <button
+                class="btn btn-primary btn-sm btn-block"
+                id="is_delivered"
+                style="max-width: 150px; max-height:30px; text-transform:capitalize"
+                onclick="window.location = '/update_status/del/{{ rent.id }}'"
+              >
+                confirm delivery
+              </button>
+              {% else %} Delivered {% endif %}
+            </td>
+            <td class="product-name">
+              <h2 class="h6 text-black">{{ rent.received_date }}</h2>
+            </td>
+            <td>
+              {% if not rent.is_returned %}
+              <button
+                class="btn btn-primary btn-sm btn-block"
+                id="is_returned"
+                style="max-width: 150px; max-height:30px; text-transform:capitalize"
+                onclick="window.location = '/update_status/ret/{{ rent.id }}'"
+              >
+                Confirm return
+              </button>
+              {% else %} Returned {% endif %}
+            </td>
+            <td class="product-name">
+              <h2 class="h6 text-black">{{ rent.return_date }}</h2>
+            </td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

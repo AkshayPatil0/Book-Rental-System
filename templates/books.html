@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static%}
+{% load tags %}
+{% block content %}
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="/">Home</a> 
+            <span class="mx-2 mb-0">/</span> 
+            <strong class="text-black">Books</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="site-section">
+      <div class="container">
+
+        <div class="row mb-5">
+          <div class="col-md-9 order-1">
+
+            <div class="row align">
+              <div class="col-md-12 mb-5">
+                <div class="float-md-left"><h2 class="text-black h5">Shop All</h2></div>
+                  <div class="d-flex">
+                    <div class="dropdown mr-1 ml-md-auto">
+                      
+                    <!-- </div>
+                  <div class="btn-group"> -->
+                    <button type="button" class="btn btn-white btn-sm dropdown-toggle px-4" id="dropdownMenuReference" data-toggle="dropdown">Sort by</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                      <a class="dropdown-item" href="/books/1">Relevance</a>
+                      <a class="dropdown-item" href="/books/sort/name/asc/1">Name, A to Z</a>
+                      <a class="dropdown-item" href="/books/sort/name/dsc/1">Name, Z to A</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/books/sort/price/asc/1">Price, low to high</a>
+                      <a class="dropdown-item" href="/books/sort/price/dsc/1">Price, high to low</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-5">
+              {% for book in books|get_item:page_no %}
+              <div class="col-lg-6 col-md-6 item-entry mb-4">
+                <a href="/books/book_info/{{book.id}}" class="product-item md-height bg-gray d-block">
+                  <img src="/media/{{book.img}}" alt="Image" class="img-fluid">
+                </a>
+                <h2 class="item-title"><a href="/books/book_info/{{book.id}}">{{book.title}}</a></h2>
+                <strong class="item-price">Rs. {{book.price}}</strong>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <div class="site-block-27">
+                  <ul>
+                    {% if page_no == 1 %}
+                    {% else %}
+                      <li><a href="{{page_no|dcr}}">&lt;</a></li>
+                    {% endif %}
+                    
+                    
+                    {% for i in pages %}
+                    {% if i == page_no %}
+                      <li class="active"><span>{{i}}</span></li>
+                    {% else %}
+                    <li><a href="{{i}}">{{i}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_no == page_count|dcr %}
+                    {% else %}
+                      <li><a href="{{page_no|incr}}">&gt;</a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 order-2 mb-5 mb-md-0">
+            <div class="border p-4 rounded mb-4">
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
+              <ul class="list-unstyled mb-0" style="text-transform: capitalize;">
+                {% for category in categories %}
+                  {% if type == 'category' and key == category %}
+                    <li class="mb-1">
+                      <span>{{category}}</span> 
+                      <span class="text-black ml-auto"></span>
+                    </li>
+                  {% else %}
+                    <li class="mb-1">
+                      <a href="/books/filter/category/{{category}}/1" class="d-flex">
+                        <span>{{category}}</span> 
+                        <span class="text-black ml-auto"></span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="border p-4 rounded mb-4">
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Author</h3>
+              <ul class="list-unstyled mb-0">
+                {% for author in authors %}
+                  {% if type == 'author' and key == author %}
+                    <li class="mb-1">
+                      <a href="/books/filter/author/{{author}}/1" class="d-flex">
+                        <span>{{author}}</span>
+                        <span class="text-black ml-auto"></span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="mb-1">
+                      <a href="/books/filter/author/{{author}}/1" class="d-flex">
+                        <span>{{author}}</span>
+                        <span class="text-black ml-auto"></span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+{% endblock %}
